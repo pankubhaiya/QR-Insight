@@ -13,7 +13,7 @@
   - Git
   
 # Installation
-  - Clone the repository: git clone : https://github.com/Niteshthori24198/substantial-money-3994
+  - Clone the repository: git clone : https://github.com/pankubhaiya/QR-Insight
   - Install dependencies: npm install
   - Start the server: npm run server
   
@@ -91,11 +91,7 @@
 
   ![Scanner](https://github.com/Niteshthori24198/substantial-money-3994/assets/62844049/ff3f1374-d092-4c17-a38d-9ee8d4a57a64)
   
-  ## User Profile Section
-
-  The User Profile section allows users to view their profile information, update their profile picture, and change their password.
-
-  ![Profile-page](https://github.com/Niteshthori24198/substantial-money-3994/assets/62844049/7308fc8c-9810-422e-8693-78cc79129df4)
+ 
 
   ## About Us Page
 
