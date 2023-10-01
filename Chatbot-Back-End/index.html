@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+     
+        #chatbox {
+            display: none;
+            margin: auto;
+            width: 90%;
+            /* justify-content: center; */
+        }
+        #chatbox1{
+            margin: auto;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+        }
+
+        #mesbox {
+            height: 70vh;
+            width: 30%;
+            border: 1px solid rgb(22, 21, 21);
+            margin: auto;
+            /* background-color: rgb(239, 202, 159); */
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKRTFZXVT_2hlB6na7H8iM8V-AvY7_zPFSXw&usqp=CAU");
+            border-radius: 3px;
+            overflow-y: scroll;
+        }
+        input{
+            width: 25%;
+            padding: 10px;
+            margin: 2px;
+            font-size: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgb(240, 240, 231);
+
+        }
+         button{
+            width: 50px;
+            padding: 10px;
+            margin: 2px;
+            /* font-size: 20px; */
+            border-radius: 50px;
+            border: none;
+             background-color: rgb(45, 45, 227);
+             color: aliceblue;
+             transition: 0.3ms none;
+
+        }
+        button:hover{
+            background-color: rgb(105, 105, 237);
+        }
+
+        h2 {
+            color: brown;
+        }
+
+        h2>span {
+            color: black;
+        }
+        .div{
+            margin: 5px;
+            border-radius: 5px;
+            padding: 2px;
+            /* color: white; */
+        }
+        .div > p:nth-child(1){
+            margin: 0px;
+            padding: 0px;
+            font-size: 13px;
+        }
+        .div > p:nth-child(2){
+            margin: 0px;
+            padding: 0px;
+            font-size: 10px;
+            text-align: left;
+        }
+        .div > h3{
+            text-decoration: none;
+            margin: 0px;
+            padding: 2px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="namebox">
+        <input id="name" type="text" placeholder="please enter your name">
+        <button id="btn">ok</button>
+    </div>
+    <div id="chatbox">
+        <div  id="chatbox1">
+            <!-- <h2>Chat<span> Application</span></h2> -->
+            <div id="mainchat">
+                <div id="mesbox"></div>
+                <input id="mes" type="text" placeholder="Message........">
+                <button id="sendbtn">></button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script src="socket.io/socket.io.js"></script>
+<script>
+
+    let socket = io();
+    var name;
+
+    let btn = document.getElementById("btn")
+
+    btn.addEventListener("click", () => {
+        name = document.getElementById("name").value
+        // console.log(message, name)           
+        document.getElementById("namebox").style.display = "none"
+        document.getElementById("chatbox").style.display = "block"
+
+    })
+
+    socket.on("chat2", (message) => {
+        // console.log(message)
+
+        person(message.msg, message.name, message.name == name ? true : false)
+
+    })
+
+    document.getElementById("sendbtn").addEventListener("click", () => {
+
+        let msg = document.getElementById("mes").value
+        if (msg && name) {
+            
+            socket.emit("chat", { msg, name })
+            console.log("yes")
+        }
+        
+        document.getElementById("mes").value=""
+    })
+
+    function person(mes, name, self) {
+        let div = document.createElement("div")
+        div.setAttribute("class","div")
+        let mess = document.createElement("h3")
+        let rname = document.createElement("p")
+        let time = document.createElement("p")
+        time.innerText = Date(Date.now()).slice(16).slice(0,5)
+        mes.innerText = mess
+        rname.innerText = self ? "Me" : name
+        div.style.textAlign = self ? "right" : "left"
+     
+        rname.style.color = self ? "green" : "red"
+        time.style.textAlign = self ? "left" : "right"
+        div.append(rname, mes, time)
+        document.getElementById("mesbox").append(div)
+        div.style.backgroundColor="white"
+        
+      
+    }
+
+</script>
